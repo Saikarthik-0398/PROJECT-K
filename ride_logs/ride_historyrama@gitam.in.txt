@@ -1,0 +1,2 @@
+[2025-04-04 10:09:29] Start: unnamed road, Kancharapalem, Visakhapatnam - 530001, Andhra Pradesh, India, Destination: agra, Vehicle: auto, Costs: [{'provider': 'Uber', 'cost': '21862.32'}, {'provider': 'Rapido', 'cost': '27628.20'}, {'provider': 'Ola', 'cost': '29430.04'}]
+[2025-04-04 10:09:49] Start: DEL, Destination: BOM, Vehicle: Flight

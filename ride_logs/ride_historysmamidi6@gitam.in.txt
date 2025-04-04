@@ -1,0 +1,2 @@
+[2025-03-17 11:11:19] Start: Jagadamba Junction, Visakhapatnam, India, Destination: Gitam Central Parking, Vadapalem, India, Vehicle: auto, Costs: [{'provider': 'Rapido', 'cost': '158.19'}, {'provider': 'Ola', 'cost': '169.49'}, {'provider': 'Uber', 'cost': '180.78'}]
+[2025-03-17 11:16:04] Start: Gitam University, Vadapalem, India, Destination: Pata Gajuwaka, India, Vehicle: auto, Costs: [{'provider': 'Rapido', 'cost': '312.82'}, {'provider': 'Ola', 'cost': '335.17'}, {'provider': 'Uber', 'cost': '357.51'}]

@@ -1,0 +1,4 @@
+[2025-04-04 09:10:11] Start: unnamed road, Madhavadhara, Visakhapatnam - 530001, Andhra Pradesh, India, Destination: venkojipalem visakhapatnam, Vehicle: auto, Costs: [{'provider': 'Uber', 'cost': '291.53'}, {'provider': 'Rapido', 'cost': '368.41'}, {'provider': 'Ola', 'cost': '392.44'}]
+[2025-04-04 09:28:14] Start: unnamed road, Madhavadhara, Visakhapatnam - 530001, Andhra Pradesh, India, Destination: delhi india, Vehicle: car, Costs: [{'provider': 'Ola', 'cost': '29133.11'}, {'provider': 'Uber', 'cost': '30520.41'}, {'provider': 'Rapido', 'cost': '30520.41'}]
+[2025-04-04 09:53:25] Start: BOM, Destination: DEL, Vehicle: Flight
+[2025-04-04 10:04:02] Start: DEL, Destination: BOM, Vehicle: Flight

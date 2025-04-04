@@ -1,0 +1,1 @@
+[2025-03-17 13:38:21] Start: MVP Colony, Visakhapatnam, India, Destination: Gitam Central Parking, Vadapalem, India, Vehicle: auto, Costs: [{'provider': 'Uber', 'cost': '127.67'}, {'provider': 'Rapido', 'cost': '146.82'}, {'provider': 'Ola', 'cost': '156.39'}]
