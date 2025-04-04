@@ -1,0 +1,179 @@
+/* General Styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #292929, #555);
+    color: #fff;
+    overflow-x: hidden;
+}
+
+/* Header */
+header {
+    background: rgba(50, 50, 50, 0.8);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    box-shadow: 0 4px 8px rgba(255, 105, 180, 0.3);
+}
+
+header .logo-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+header img {
+    width: 40px;
+    height: auto;
+}
+
+header h1 {
+    font-size: 24px;
+    color: #f8c3d9;
+}
+
+/* Navbar */
+nav {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    transition: 0.3s;
+    font-size: 16px;
+    border-radius: 5px;
+}
+.suggestions {
+    border: 1px solid #ccc;
+    max-height: 150px;
+    overflow-y: auto;
+    background: white;
+    position: absolute;
+    width: 100%;
+    display: none;
+    z-index: 1000;
+    color:black;
+}
+.suggestions div {
+    padding: 10px;
+    cursor: pointer;
+}
+.suggestions div:hover {
+    background: #f0f0f0;
+}
+.input-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+
+
+nav a:hover, nav a.active {
+    background: rgba(255, 105, 180, 0.4);
+}
+
+/* Main Container */
+.container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 25px;
+    background: rgba(50, 50, 50, 0.8);
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(255, 105, 180, 0.2);
+}
+
+/* Form Styling */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 16px;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #fef9f9;
+}
+
+input, select {
+    padding: 12px;
+    border: 1px solid #f8c3d9;
+    border-radius: 5px;
+    font-size: 16px;
+    background: #fff;
+    color: #333;
+    transition: 0.3s;
+}
+
+input:focus, select:focus {
+    border-color: #ff4081;
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 105, 180, 0.5);
+}
+
+/* Submit Button */
+button {
+    background: linear-gradient(135deg, #ff4081, #8a8a8a);
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+button:hover {
+    background: linear-gradient(135deg, #8a8a8a, #ff4081);
+}
+
+/* Result Section */
+.result {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(255, 105, 180, 0.2);
+    border-left: 4px solid #ff4081;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/* Map Section */
+#map {
+    height: 400px;
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        max-width: 90%;
+        padding: 20px;
+    }
+
+    input, select {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .result {
+        font-size: 14px;
+    }
+
+    nav a {
+        font-size: 14px;
+        padding: 6px 12px;
+    }
+}
