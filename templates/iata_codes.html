@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IATA Codes - RideWise</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+
+    <nav class="bg-white p-4 shadow-lg">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <h2 class="text-gray-800 text-xl font-bold">RideWise</h2>
+            <nav class="flex gap-4">
+                <a href="/dashboard" class="text-gray-800 hover:text-blue-600">Home</a>
+                <a href="/flights" class="text-gray-800 hover:text-blue-600">Flights</a>
+                <a href="/currency_converter" class="text-gray-800 hover:text-blue-600">Currency Converter</a>
+                <a href="/" class="text-gray-800 hover:text-blue-600">Logout</a>
+            </nav>
+        </div>
+    </nav>
+
+    <div class="max-w-5xl mx-auto mt-10 bg-white shadow-lg rounded-lg p-6">
+        <h2 class="text-2xl font-bold text-center text-gray-800">IATA Codes</h2>
+
+        <div class="mt-4">
+            <input type="text" id="searchInput" class="w-full p-2 border border-gray-300 rounded-md" placeholder="Search City...">
+        </div>
+
+        <table class="w-full mt-4 border-collapse border border-gray-300">
+            <thead>
+                <tr class="bg-blue-600 text-white">
+                    <th class="border border-gray-300 p-2">City</th>
+                    <th class="border border-gray-300 p-2">IATA Code</th>
+                </tr>
+            </thead>
+            <tbody id="iataTableBody">
+                </tbody>
+        </table>
+    </div>
+
+    <script>
+        const iataCodes = [
+            { city: "Delhi", iata: "DEL" },
+            { city: "Mumbai", iata: "BOM" },
+            { city: "Bangalore", iata: "BLR" },
+            { city: "Kolkata", iata: "CCU" },
+            { city: "Chennai", iata: "MAA" },
+            { city: "Hyderabad", iata: "HYD" },
+            { city: "Ahmedabad", iata: "AMD" },
+            { city: "Kochi", iata: "COK" },
+            { city: "Pune", iata: "PNQ" },
+            { city: "Goa", iata: "GOI" },
+            { city: "Lucknow", iata: "LKO" },
+            { city: "Guwahati", iata: "GAU" },
+            { city: "Chandigarh", iata: "IXC" },
+            { city: "Patna", iata: "PAT" },
+            { city: "Varanasi", iata: "VNS" },
+            { city: "Thiruvananthapuram", iata: "TRV" },
+            { city: "Amritsar", iata: "ATQ" },
+            { city: "Madurai", iata: "IXM" },
+            { city: "Coimbatore", iata: "CJB" },
+            { city: "Mangalore", iata: "IXE" },
+            { city: "Raipur", iata: "RPR" },
+            { city: "Ranchi", iata: "IXR" },
+            { city: "Visakhapatnam", iata: "VTZ" },
+            { city: "Dehradun", iata: "IXZ" },
+            { city: "Bhubaneswar", iata: "BBI" },
+            { city: "Aurangabad", iata: "IXU" },
+            { city: "Indore", iata: "IDR" },
+            { city: "Jaipur", iata: "JAI" },
+            { city: "Agra", iata: "AGR" },
+            { city: "Vadodara", iata: "BDQ" },
+            { city: "Belgaum", iata: "IXG" },
+            { city: "Surat", iata: "STV" },
+            { city: "Jabalpur", iata: "JLR" },
+            { city: "Udaipur", iata: "UDR" },
+            { city: "Rajkot", iata: "RAJ" },
+            { city: "Jammu", iata: "IXW" },
+            { city: "Jorhat", iata: "JRH" },
+            { city: "Diu", iata: "DIU" },
+            { city: "Kushinagar", iata: "KUU" },
+            { city: "Nanded", iata: "NDC" },
+            { city: "Pantnagar", iata: "PGH" },
+            { city: "Pondicherry", iata: "PYB" },
+            { city: "Tezpur", iata: "TEZ" },
+            { city: "Zero", iata: "ZER" },
+            { city: "Shillong", iata: "SHL" },
+            { city: "Dimapur", iata: "DMU" },
+            { city: "Rourkela", iata: "RRK" },
+            { city: "Silchar", iata: "SLV" },
+            { city: "Daparizo", iata: "DEP" },
+            { city: "Hissar", iata: "HSS" },
+            { city: "Khajuraho", iata: "KJB" },
+            { city: "Jagdalpur", iata: "JGB" },
+            { city: "Vengurla", iata: "VEG" },
+            { city: "Tanjore", iata: "TJV" },
+            { city: "Raichur", iata: "RDP" },
+            { city: "Bhuj", iata: "BHJ" },
+            { city: "Kandla", iata: "IXY" },
+            { city: "Kanpur", iata: "KNU" },
+            { city: "Imphal", iata: "IMF" },
+            { city: "Aizawl", iata: "AJL" },
+            { city: "Lilabari", iata: "IXI" },
+            { city: "Agatti Island", iata: "AGX" },
+            { city: "Kozhikode", iata: "KZN" },
+            { city: "Purnea", iata: "PAB" },
+            { city: "Bareli", iata: "BEK" },
+            { city: "Cuddapah", iata: "CDP" },
+            { city: "Gwalior", iata: "GWL" },
+            { city: "Hubli", iata: "HBX" },
+            { city: "Jaisalmer", iata: "JSA" },
+            { city: "Kollam", iata: "KOC" },
+            { city: "Ludhiana", iata: "LDA" },
+            { city: "Latur", iata: "LTU" },
+            { city: "Mohanbari", iata: "MOH" },
+            { city: "Muzaffarpur", iata: "MZA" },
+            { city: "Pantnagar", iata: "PAN" },
+            { city: "Porbandar", iata: "PBW" },
+            { city: "Puttaparthi", iata: "PUT" },
+            { city: "Rajahmundry", iata: "RJH" },
+            { city: "Ratnagiri", iata: "RTC" },
+            { city: "Srinagar", iata: "SXR" },
+            { city: "Tuticorin", iata: "TCR" },
+            { city: "Satna", iata: "TNI" },
+            { city: "Thanjavur", iata: "TNJ" },
+            { city: "Tezpur", iata: "TXL" },
+            { city: "Vijayawada", iata: "VGA" },
+            { city: "Vadodara", iata: "VDD" },
+            { city: "Warangal", iata: "WGC" },
+            { city: "Khowai", iata: "XAI" },
+            { city: "Kailashahar", iata: "XIL" },
+            { city: "Kandahar", iata: "XKA" },
+            { city: "Khonsa", iata: "XKH" },
+            { city: "Kilai", iata: "XKI" },
+            { city: "Kota", iata: "XKO" },
+            { city: "Kyaukpyu", iata: "XKY" },
+            { city: "Jeypore", iata: "XWB" },
+            { city: "Kailashahar", iata: "XWC" },
+            { city: "Kandla", iata: "XWD" },
+            { city: "Khonsa", iata: "XWE" },
+            { city: "Kilai", iata: "XWF" },
+            { city: "Dubai", iata: "DXB" },
+            { city: "London", iata: "LHR" },
+            { city: "Paris", iata: "CDG" },
+            { city: "Singapore", iata: "SIN" },
+            { city: "Hong Kong", iata: "HKG" },
+            { city: "Johannesburg", iata: "JNB" },
+            { city: "Nairobi", iata: "NBO" },
+            { city: "Addis Ababa", iata: "ADD" },
+            { city: "Cairo", iata: "CAI" },
+            { city: "Sao Paulo", iata: "GRU" },
+            { city: "Mexico City", iata: "MEX" },
+            { city: "Bangkok", iata: "BKK" },
+            { city: "Kuala Lumpur", iata: "KUL" },
+            { city: "Manila", iata: "MNL" },
+            { city: "Jakarta", iata: "CGK" },
+            { city: "Ho Chi Minh City", iata: "SGN" },
+            { city: "Hanoi", iata: "HAN" },
+            { city: "Dhaka", iata: "DAC" },
+            { city: "Kathmandu", iata: "KTM" },
+            { city: "Colombo", iata: "CMB" },
+            { city: "Islamabad", iata: "ISB" },
+            { city: "Lahore", iata: "LHE" },
+            { city: "Karachi", iata: "KHI" },
+            { city: "Beijing", iata: "PEK" },
+            { city: "Shanghai", iata: "SHA" },
+            { city: "Guangzhou", iata: "CAN" },
+            { city: "Shenzhen", iata: "SZX" },
+            { city: "Chengdu", iata: "CTU" },
+            { city: "New York", iata: "JFK" },
+            { city: "Los Angeles", iata: "LAX" },
+            { city: "Tokyo", iata: "HND" },
+            { city: "Frankfurt", iata: "FRA" },
+            // Add more IATA codes here as needed (up to 1000)
+            { city: "Chicago", iata: "ORD"},
+            { city: "Toronto", iata: "YYZ"},
+            { city: "Rome", iata: "FCO"},
+            { city: "Madrid", iata: "MAD"},
+            { city: "Amsterdam", iata: "AMS"},
+            { city: "Berlin", iata: "TXL"},
+            { city: "Sydney", iata: "SYD"},
+            { city: "Melbourne", iata: "MEL"},
+            { city: "Brisbane", iata: "BNE"},
+            { city: "Auckland", iata: "AKL"},
+            { city: "Wellington", iata: "WLG"},
+            { city: "Seoul", iata: "ICN"},
+            { city: "Osaka", iata: "KIX"},
+            { city: "Taipei", iata: "TPE"},
+            { city: "Zurich", iata: "ZRH"},
+            { city: "Vienna", iata: "VIE"},
+            { city: "Brussels", iata: "BRU"},
+            { city: "Copenhagen", iata: "CPH"},
+            { city: "Stockholm", iata: "ARN"},
+            { city: "Oslo", iata: "OSL"},
+            { city: "Helsinki", iata: "HEL"},
+            { city: "Lisbon", iata: "LIS"},
+            { city: "Dublin", iata: "DUB"},
+            { city: "Athens", iata: "ATH"},
+            { city: "Istanbul", iata: "IST"},
+            { city: "Moscow", iata: "SVO"},
+            { city: "St. Petersburg", iata: "LED"},
+            { city: "Riyadh", iata: "RUH"},
+            { city: "Jeddah", iata: "JED"},
+            { city: "Doha", iata: "DOH"},
+            { city: "Abu Dhabi", iata: "AUH"},
+            { city: "Casablanca", iata: "CMN"},
+            { city: "Algiers", iata: "ALG"},
+            { city: "Tunis", iata: "TUN"},
+            { city: "Lagos", iata: "LOS"},
+            { city: "Accra", iata: "ACC"},
+            { city: "Dakar", iata: "DKR"},
+            { city: "Bogota", iata: "BOG"},
+            { city: "Lima", iata: "LIM"},
+            { city: "Santiago", iata: "SCL"},
+            { city: "Buenos Aires", iata: "EZE"},
+            { city: "Medellin", iata: "MDE"},
+            { city: "Quito", iata: "UIO"},
+            { city: "Panama City", iata: "PTY"},
+            { city: "San Jose", iata: "SJO"},
+            { city: "Guatemala City", iata: "GUA"},
+            { city: "San Salvador", iata: "SAL"},
+            { city: "Tegucigalpa", iata: "TGU"},
+            { city: "Managua", iata: "MGA"},
+            { city: "Santo Domingo", iata: "SDQ"},
+            { city: "Havana", iata: "HAV"},
+            { city: "Kingston", iata: "KIN"},
+            { city: "Port-au-Prince", iata: "PAP"},
+            { city: "Nassau", iata: "NAS"},
+            { city: "Bridgetown", iata: "BGI"},
+            { city: "Port of Spain", iata: "POS"},
+            { city: "Georgetown", iata: "GEO"},
+            { city: "Paramaribo", iata: "PBM"},
+            { city: "Cayenne", iata: "CAY"},
+            { city: "La Paz", iata: "LPB"},
+            { city: "Asuncion", iata: "ASU"},
+            { city: "Montevideo", iata: "MVD"},
+            { city: "Brasilia", iata: "BSB"},
+            { city: "Salvador", iata: "SSA"},
+            { city: "Recife", iata: "REC"},
+            { city: "Porto Alegre", iata: "POA"},
+            { city: "Manaus", iata: "MAO"},
+            { city: "Belem", iata: "BEL"},
+            { city: "Fortaleza", iata: "FOR"},
+            // add more cities.
+        ];
+
+        function displayIataCodes(data) {
+            const tableBody = document.getElementById("iataTableBody");
+            tableBody.innerHTML = ""; // Clear existing table rows
+
+            data.forEach(item => {
+                const row = document.createElement("tr");
+                row.className = "text-center bg-gray-50 hover:bg-gray-200";
+                row.innerHTML = `
+                    <td class="border border-gray-300 p-2">${item.city}</td>
+                    <td class="border border-gray-300 p-2 font-bold">${item.iata}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function filterIataCodes(searchTerm) {
+            const filteredCodes = iataCodes.filter(item =>
+                item.city.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            displayIataCodes(filteredCodes);
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            displayIataCodes(iataCodes); // Display all codes initially
+
+            const searchInput = document.getElementById("searchInput");
+            searchInput.addEventListener("input", function() {
+                filterIataCodes(searchInput.value);
+            });
+        });
+    </script>
+</body>
+</html>

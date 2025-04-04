@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RideWise - Compare & Save</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Navbar Styling */
+        .navbar a {
+            position: relative;
+            text-decoration: none;
+            padding-bottom: 4px;
+            transition: all 0.3s ease-in-out;
+        }
+        .navbar a::after {
+            content: "";
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            background: #2563eb;
+            left: 50%;
+            bottom: 0;
+            transition: all 0.3s ease-in-out;
+            transform: translateX(-50%);
+        }
+        .navbar a:hover {
+            color: #2563eb;
+            transform: scale(1.1);
+        }
+        .navbar a:hover::after {
+            width: 100%;
+        }
+
+        /* Star Rating */
+        .star-rating {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #ddd;
+        }
+        .star-rating .fa-star {
+            transition: color 0.3s;
+        }
+        .star-rating .fa-star.active,
+        .star-rating .fa-star:hover,
+        .star-rating .fa-star:hover ~ .fa-star {
+            color: #facc15;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), 
+                        url('./static/image.jpg') center/cover no-repeat;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 20px;
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+            animation: fadeIn 2s ease-in-out;
+        }
+        .hero p {
+            font-size: 1.3rem;
+            animation: fadeIn 2.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Buttons */
+        .cta-button {
+            background-color: #2563eb;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(37, 99, 235, 0.7);
+        }
+
+   .auto-container {
+    position: fixed;
+    bottom: 20px;
+    left: -100px; /* Start off-screen on the left */
+    font-size: 6.5rem;
+    animation: moveAuto 10s linear infinite;
+    transform: scaleX(-1); /* Flip the auto to face right */
+}
+
+@keyframes moveAuto {
+    0% { left: -100px; }
+    100% { left: 100vw; } /* Moves fully across the screen */
+}
+  
+
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+    
+    <!-- Navigation -->
+    <nav class="bg-white p-4 shadow-lg sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <img src="static/R.png" alt="Logo" class="w-14 h-14"> 
+                <h2 class="text-gray-800 text-3xl font-extrabold">RideWise</h2>
+            </div>
+            <div class="navbar flex gap-10 text-lg">
+                <a href="/dashboard">Home</a>
+                <a href="/check">Compare Rides</a>
+                <a href="/flights">Compare Flights</a>
+                <a href="/act">Activities</a>
+                <a href="/" class="text-red-600 hover:text-red-800">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <h1>Compare & Save on <span class="text-blue-400">Rides & Flights</span></h1>
+        <p class="mt-4 italic">Find the best deals for both rides and flights instantly!</p>
+        <div class="flex gap-6 mt-6">
+            <a href="/check" class="cta-button">Compare Ride Costs</a>
+            <a href="/flights" class="cta-button">Compare Flight Costs</a>
+        </div>
+    </header>
+
+    <!-- Feedback Section -->
+    <section class="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-12">
+        <h2 class="text-2xl font-bold text-center">We Value Your Feedback!</h2>
+        <p class="text-center text-gray-600 mt-2">Tell us about your experience with RideWise.</p>
+
+        <!-- Star Rating System -->
+        <div class="star-rating mt-4" id="starRating">
+            <i class="fa-solid fa-star" data-value="1"></i>
+            <i class="fa-solid fa-star" data-value="2"></i>
+            <i class="fa-solid fa-star" data-value="3"></i>
+            <i class="fa-solid fa-star" data-value="4"></i>
+            <i class="fa-solid fa-star" data-value="5"></i>
+        </div>
+
+        <form class="mt-6">
+            <textarea class="w-full border border-gray-300 p-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" rows="4" placeholder="Your feedback..."></textarea>
+            <button type="submit" class="cta-button mt-4 w-full">Submit Feedback</button>
+        </form>
+    </section>
+
+    <!-- Contact Us Section -->
+    <section class="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-12 text-center">
+        <h2 class="text-2xl font-bold">Contact Us</h2>
+        <p class="text-gray-600 mt-2">Need help? Reach out to us at:</p>
+        <p class="mt-4 text-lg font-semibold"><i class="fa-solid fa-phone text-blue-500"></i> 9177832325</p>
+        <p class="mt-2 text-lg font-semibold"><i class="fa-solid fa-phone text-blue-500"></i> 8639034522</p>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-6 text-center mt-12">
+        <p>&copy; 2024 RideWise - All Rights Reserved</p>
+    </footer>
+
+    <!-- Auto Animation -->
+    <div class="auto-container">🛺</div>
+
+
+    <script>
+        // Star Rating Interaction
+        const stars = document.querySelectorAll(".star-rating .fa-star");
+        stars.forEach(star => {
+            star.addEventListener("click", function() {
+                let value = this.getAttribute("data-value");
+                stars.forEach(s => {
+                    s.classList.remove("active");
+                });
+                for (let i = 0; i < value; i++) {
+                    stars[i].classList.add("active");
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

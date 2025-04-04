@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Search - RideWise</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+    <nav class="bg-white p-4 shadow-lg">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <h2 class="text-gray-800 text-xl font-bold">RideWise</h2>
+            <nav class="flex gap-4">
+                <a href="/dashboard" class="text-gray-800 hover:text-blue-600">Home</a>
+                <a href="/flights" class="text-gray-800 hover:text-blue-600">Flights</a>
+                <a href="/currency_converter" class="text-gray-800 hover:text-blue-600">Currency Converter</a>
+                <a href="/" class="text-gray-800 hover:text-blue-600">Logout</a>
+            </nav>
+        </div>
+    </nav>
+    
+    <header class="bg-blue-100 p-6 shadow-md text-center">
+        <h2 class="text-3xl font-bold text-gray-800">Search for Flights</h2>
+    </header>
+    
+    <div class="max-w-2xl mx-auto mt-8 bg-white shadow-xl rounded-lg p-6">
+        <form action="/flights" method="POST" class="space-y-4">
+            <div>
+                <label class="block font-medium text-gray-700">Departure:</label>
+                <input type="text" id="departure" name="departure" placeholder="Enter departure airport  (ONLY IATA CODES❗)" required 
+                       class="w-full p-3 border border-gray-400 bg-gray-50 rounded-lg focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div>
+                <label class="block font-medium text-gray-700">Arrival:</label>
+                <input type="text" id="arrival" name="arrival" placeholder="Enter arrival airport   (ONLY IATA CODES❗)" required 
+                       class="w-full p-3 border border-gray-400 bg-gray-50 rounded-lg focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block font-medium text-gray-700">Departure Date:</label>
+                    <input type="date" name="outbound_date" required 
+                           class="w-full p-3 border border-gray-400 bg-gray-50 rounded-lg focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block font-medium text-gray-700">Return Date:</label>
+                    <input type="date" name="return_date" 
+                           class="w-full p-3 border border-gray-400 bg-gray-50 rounded-lg focus:ring-2 focus:ring-blue-500">
+                </div>
+            </div>
+            
+            <button type="submit" class="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition">
+                Search Flights
+            </button>
+        </form>
+    </div>
+
+    <div class="text-center mt-6">
+        <a href="/iata_codes" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition">
+            Know Your IATA Code
+        </a>
+    </div>
+
+    <div class="text-center mt-6">
+        <a href="/currency_converter" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition">
+            Convert Currency
+        </a>
+    </div>
+    
+    {% if flights %}
+    <div class="max-w-4xl mx-auto mt-8">
+        <h2 class="text-2xl font-bold text-center text-blue-600">Flight Results</h2>
+
+        <div class="bg-white shadow-md rounded-lg p-6 mt-4">
+            {% for flight in flights %}
+                <div class="border-b border-gray-300 py-4">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800">{{ flight.airline }}</h3>
+                            <p class="text-gray-600">{{ flight.airplane }}</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-xl font-bold text-blue-600">{{ flight.price }}</p>
+                        </div>
+                    </div>
+                    <div class="mt-2 flex justify-between text-gray-700">
+                        <div>
+                            <p class="font-medium">{{ flight.departure_airport.name }}</p>
+                            <p class="text-sm">Departure: {{ flight.departure_airport.time }}</p>
+                        </div>
+                        <div>
+                            <p class="font-medium">{{ flight.arrival_airport.name }}</p>
+                            <p class="text-sm">Arrival: {{ flight.arrival_airport.time }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+<script>
+    async function convertCurrency() {
+        const amount = document.getElementById("amount").value;
+        const fromCurrency = document.getElementById("from_currency").value;
+        const toCurrency = document.getElementById("to_currency").value;
+        const apiKey = "{{ CURRENCY_CONVERSION_API_KEY }}";
+
+        if (!amount) {
+            alert("Please enter an amount to convert.");
+            return;
+        }
+
+        try {
+            const response = await fetch(`https://openexchangerates.org/api/latest.json?app_id=${apiKey}`);
+            const data = await response.json();
+
+            if (data && data.rates) {
+                const fromRate = data.rates[fromCurrency];
+                const toRate = data.rates[toCurrency];
+                const convertedAmount = (amount / fromRate) * toRate;
+                
+                document.getElementById("converted_result").innerText = 
+                    `${amount} ${fromCurrency} = ${convertedAmount.toFixed(2)} ${toCurrency}`;
+            } else {
+                alert("Currency conversion failed. Please try again later.");
+            }
+        } catch (error) {
+            alert("An error occurred while converting currency.");
+            console.error("Currency Conversion Error:", error);
+        }
+    }
+
+   
+</script>
+
+</body>
+</html>

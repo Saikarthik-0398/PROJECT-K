@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ride History</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gradient-to-r from-gray-100 via-white to-gray-200 text-gray-800 font-sans">
+    <nav class="bg-white p-4 shadow-lg">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <div class="logo-title flex items-center gap-2">
+                <img src="static/R.png" alt="Logo" class="w-8 h-8"> 
+                <h2 class="text-gray-800 text-xl font-bold">RideWise</h2>
+            </div>
+            <nav class="flex gap-4">
+                <a href="/dashboard" class="text-gray-800 hover:text-blue-600">Home</a>
+                <a href="/check" class="text-gray-800 hover:text-blue-600">Ride Cost Comparison</a>
+                <a href="/flights" class="text-gray-800 hover:text-blue-600">Flights</a>
+                <a href="/act" class="text-gray-800 hover:text-blue-600">Activities</a>
+                <a href="/" class="text-gray-800 hover:text-blue-600">Logout</a>
+            </nav>
+        </div>
+    </nav>
+
+    <header class="bg-blue-100 p-6 shadow-md text-center">
+        <h2 class="text-3xl font-bold text-black">Ride Search History</h2>
+    </header>
+
+    <div class="max-w-3xl mx-auto mt-8 bg-white shadow-xl rounded-lg p-6">
+        <h2 class="text-2xl font-bold text-center text-blue-600 mb-6">Ride Search History</h2>
+        <div id="historyList"></div>
+    </div>
+
+    <script>
+        async function fetchHistory() {
+            try {
+                const response = await fetch('/get_history');
+                const data = await response.json();
+                const historyList = document.getElementById('historyList');
+    
+                if (data.history.length === 0) {
+                    historyList.innerHTML = "<p class='text-center text-gray-600'>No history available.</p>";
+                    return;
+                }
+    
+                historyList.innerHTML = data.history.map(entry => {
+                    // Match when costs are available
+                    const fullMatch = entry.match(/\[(.*?)\] Start: (.*?), Destination: (.*?), Vehicle: (.*?), Costs: (.*)/);
+                    
+                    if (fullMatch) {
+                        const timestamp = fullMatch[1];
+                        const start = fullMatch[2];
+                        const destination = fullMatch[3];
+                        const vehicle = fullMatch[4];
+                        const costs = JSON.parse(fullMatch[5].replace(/'/g, '"'));
+    
+                        return `
+                            <div class="bg-white shadow-md rounded-lg p-6 mb-4 border border-gray-300">
+                                <p class="font-medium text-gray-800"><strong>📅 Date & Time:</strong> ${timestamp}</p>
+                                <p class="font-medium text-gray-800"><strong>📍 From:</strong> ${start}</p>
+                                <p class="font-medium text-gray-800"><strong>📍 To:</strong> ${destination}</p>
+                                <p class="font-medium text-gray-800"><strong>🚗 Vehicle:</strong> ${vehicle.charAt(0).toUpperCase() + vehicle.slice(1)}</p>
+                                <p class="font-medium text-gray-800"><strong>💰 Ride Costs:</strong></p>
+                                <ul class="list-none p-0">
+                                    ${costs.map(cost => `<li class="text-gray-600 bg-gray-100 p-2 my-1 rounded-md"><strong>${cost.provider}:</strong> ₹${cost.cost}</li>`).join('')}
+                                </ul>
+                            </div>
+                        `;
+                    } else {
+                        // Match flight format without costs
+                        const flightMatch = entry.match(/\[(.*?)\] Start: (.*?), Destination: (.*?), Vehicle: (.*)/);
+                        if (!flightMatch) return ''; // Skip malformed
+    
+                        const timestamp = flightMatch[1];
+                        const start = flightMatch[2];
+                        const destination = flightMatch[3];
+                        const vehicle = flightMatch[4];
+    
+                        return `
+                            <div class="bg-white shadow-md rounded-lg p-6 mb-4 border border-blue-300">
+                                <p class="font-medium text-gray-800"><strong>📅 Date & Time:</strong> ${timestamp}</p>
+                                <p class="font-medium text-gray-800"><strong>📍 From:</strong> ${start}</p>
+                                <p class="font-medium text-gray-800"><strong>📍 To:</strong> ${destination}</p>
+                                <p class="font-medium text-gray-800"><strong>✈️ Vehicle:</strong> ${vehicle.charAt(0).toUpperCase() + vehicle.slice(1)}</p>
+                                <p class="text-sm text-gray-500">No cost data available for this flight.</p>
+                            </div>
+                        `;
+                    }
+                }).join('');
+            } catch (error) {
+                console.error("Failed to fetch history:", error);
+            }
+        }
+    
+        window.onload = fetchHistory;
+    </script>
+    
+</body>
+</html>
